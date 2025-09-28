@@ -1,20 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<RootNamespace>ResoniteModLoader</RootNamespace>
-		<AssemblyName>ResoniteModLoader</AssemblyName>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<TargetFramework>net9.0</TargetFramework>
-		<FileAlignment>512</FileAlignment>
 		<LangVersion>12.0</LangVersion>
 		<Nullable>enable</Nullable>
-		<Deterministic>true</Deterministic>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<EnableNETAnalyzers>True</EnableNETAnalyzers>
 		<AnalysisLevel>9.0-Recommended</AnalysisLevel>
 		<!-- Change CopyToLibraries to true if you'd like builds to be moved into the Libraries folder automatically-->
 		<CopyToLibraries Condition="'$(CopyToLibraries)'==''">true</CopyToLibraries>
-		<DebugType Condition="'$(Configuration)'=='Debug'">embedded</DebugType>
+		<ResonitePath Condition="Exists('E:\Programs\Steam\steamapps\common\Resonite')">E:\Programs\Steamcmd\steamapps\common\Resonite\</ResonitePath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(ResonitePath)'==''">

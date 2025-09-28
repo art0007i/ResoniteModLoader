@@ -44,16 +44,11 @@ internal static class Util {
 			// schedule a new call
 			Task.Delay(milliseconds, cancelTokenSource.Token)
 				.ContinueWith(t => {
-					if (t.IsCompletedSuccessfully()) {
+					if (t.IsCompletedSuccessfully) {
 						Task.Run(() => func(arg));
 					}
 				}, TaskScheduler.Default);
 		};
-	}
-
-	// Shim because this doesn't exist in .NET 4.6
-	private static bool IsCompletedSuccessfully(this Task t) {
-		return t.IsCompleted && !t.IsFaulted && !t.IsCanceled;
 	}
 
 	// credit to Delta for this method https://github.com/XDelta/
@@ -81,7 +76,11 @@ internal static class Util {
 		try {
 			return assembly.GetTypes().Where(type => CheckType(type, predicate));
 		} catch (ReflectionTypeLoadException e) {
+			Logger.ErrorInternal(e);
 			return e.Types.Where(type => CheckType(type, predicate));
+		} catch (Exception e) {
+			Logger.ErrorInternal($"Unhandled exception when processing loadable types: {e}");
+			return [];
 		}
 	}
 
@@ -89,6 +88,7 @@ internal static class Util {
 	// this does a series of increasingly aggressive checks to see if the type is unsafe to touch
 	private static bool CheckType(Type type, Predicate<Type> predicate) {
 		if (type == null) {
+			Logger.DebugInternal($"Passed in type was null");
 			return false;
 		}
 

@@ -420,9 +420,9 @@ public class ModConfiguration : IModConfigurationDefinition {
 			return new ModConfiguration(definition);
 		} catch (Exception e) {
 			// I know not what exceptions the JSON library will throw, but they must be contained
-			mod.AllowSavingConfiguration = true;
+			mod.AllowSavingConfiguration = false;
 			var backupPath = configFile + "." + Convert.ToBase64String(Encoding.UTF8.GetBytes(((int)DateTimeOffset.Now.TimeOfDay.TotalSeconds).ToString("X"))) + ".bak"; //ExampleMod.json.40A4.bak, unlikely to already exist
-			Logger.ErrorExternal($"Error loading config for {mod.Name}, creating new config file (old file can be found at {backupPath}). Exception:\n{e}");
+			Logger.ErrorInternal($"Error loading config for {mod.Name}, creating new config file (old file can be found at {backupPath}). Exception:\n{e}");
 			File.Move(configFile, backupPath);
 		}
 
@@ -557,6 +557,7 @@ public class ModConfiguration : IModConfigurationDefinition {
 
 	private static void ShutdownHook() {
 		int count = 0;
+		Stopwatch stopwatch = Stopwatch.StartNew();
 		ModLoader.Mods()
 			.Select(mod => mod.GetConfiguration())
 			.Where(config => config != null)
@@ -571,7 +572,8 @@ public class ModConfiguration : IModConfigurationDefinition {
 				}
 				count += 1;
 			});
-		Logger.MsgInternal($"Configs saved for {count} mods.");
+		stopwatch.Stop();
+		Logger.MsgInternal($"Configs saved for {count} mods in {stopwatch.ElapsedMilliseconds}ms.");
 	}
 }
 
