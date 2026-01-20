@@ -1,6 +1,6 @@
-using System.Runtime.InteropServices;
-
 using Elements.Data;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("ResoniteModLoader")]
 [assembly: AssemblyProduct("ResoniteModLoader")]
@@ -11,5 +11,9 @@ using Elements.Data;
 
 [assembly: ComVisible(false)]
 
+// Prevent FrooxEngine.Weaver from modifying this assembly, as it doesn't need anything done to it
+// This keeps Weaver from overwriting AssemblyVersionAttribute
+[module: Description("FROOXENGINE_WEAVED")]
+
 //Mark as DataModelAssembly for the Plugin loading system to load this assembly
-[assembly: DataModelAssembly(DataModelAssemblyType.UserspaceCore)]
+[assembly: DataModelAssembly(DataModelAssemblyType.Optional)]
