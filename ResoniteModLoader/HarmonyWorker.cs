@@ -1,5 +1,3 @@
-using FrooxEngine;
-
 using HarmonyLib;
 
 namespace ResoniteModLoader;

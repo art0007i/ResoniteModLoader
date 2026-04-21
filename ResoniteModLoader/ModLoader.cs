@@ -1,3 +1,5 @@
+using System.Globalization;
+
 using HarmonyLib;
 
 namespace ResoniteModLoader;
@@ -5,8 +7,7 @@ namespace ResoniteModLoader;
 /// <summary>
 /// Contains the actual mod loader.
 /// </summary>
-public sealed class ModLoader {
-	internal const string VERSION_CONSTANT = "4.2.0";
+public sealed partial class ModLoader {
 	/// <summary>
 	/// ResoniteModLoader's version
 	/// </summary>
@@ -32,8 +33,7 @@ public sealed class ModLoader {
 				return types.Any(t => {
 					try {
 						return t != null && t.Namespace == "FrooxEngine.Headless";
-					}
-					catch {
+					} catch {
 						return false;
 					}
 				}
@@ -81,7 +81,7 @@ public sealed class ModLoader {
 				StringBuilder sb = new();
 				sb.AppendLine(reflectionTypeLoadException.ToString());
 				foreach (Exception? loaderException in reflectionTypeLoadException.LoaderExceptions) {
-					sb.AppendLine($"Loader Exception: {loaderException?.Message}");
+					sb.AppendLine(CultureInfo.InvariantCulture, $"Loader Exception: {loaderException?.Message}");
 					if (loaderException is FileNotFoundException fileNotFoundException) {
 						if (!string.IsNullOrEmpty(fileNotFoundException.FusionLog)) {
 							sb.Append("    Fusion Log:\n    ");
