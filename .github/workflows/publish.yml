@@ -57,23 +57,3 @@ jobs:
             ${{ github.workspace }}/release/*.xml
             ${{ github.workspace }}/ResoniteModLoader.zip
           generate_release_notes: true
-
-#  release-nuget:
-#    name: NuGet Release
-#    runs-on: ubuntu-latest
-#    needs: [build]
-#    steps:
-#      - name: Setup Dotnet
-#        uses: actions/setup-dotnet@v5
-#        with:
-#          dotnet-version: 10.x
-#
-#      - name: Get NuGet Artifact
-#        uses: actions/download-artifact@v8
-#        with:
-#          name: NuGet Packages
-#          path: ${{ github.workspace }}/nupkgs
-#
-#      - name: Publish package to registry
-#        run: |
-#          dotnet nuget push "${{ github.workspace }}/nupkgs/*.nupkg" --api-key "${{ secrets.NUGET_APIKEY }}" --source "${{ env.NUGET_REGISTRY_URL }}"
