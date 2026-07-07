@@ -73,24 +73,6 @@ jobs:
         with:
           subject-path: "${{ env.ARTIFACT_DIR }}*.dll"
 
-#WEAVING
-      - name: Weave
-        run: dotnet run --configuration Release --no-restore --project PluginWeaver -- "${{ env.ARTIFACT_DIR }}ResoniteModLoader.dll"
-        env:
-          ResonitePath: ${{ steps.resonite.outputs.resonite-path }}/
-
-      - name: Weaved ResoniteModLoader Artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: ResoniteModLoader Weaved
-          path: "${{ env.ARTIFACT_DIR }}*"
-          if-no-files-found: error
-
-      - name: Attest Weaved
-        uses: actions/attest@v4
-        with:
-          subject-path: "${{ env.ARTIFACT_DIR }}*.dll"
-
   validate-nuget:
     name: Validate NuGet Package
     runs-on: ubuntu-latest
