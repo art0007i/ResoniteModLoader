@@ -30,10 +30,10 @@ jobs:
       - name: Download Harmony
         run: curl -L https://www.nuget.org/api/v2/package/Lib.Harmony/${{ env.HARMONY_VERSION }} --output Lib.Harmony.nupkg
 
-      - name: Get Weaved ResoniteModLoader Artifact
+      - name: Get ResoniteModLoader Artifact
         uses: actions/download-artifact@v8
         with:
-          name: ResoniteModLoader Weaved
+          name: ResoniteModLoader
           path: ${{ github.workspace }}/release
 
 # Installer zip archive:
@@ -58,22 +58,22 @@ jobs:
             ${{ github.workspace }}/ResoniteModLoader.zip
           generate_release_notes: true
 
-  release-nuget:
-    name: NuGet Release
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-      - name: Setup Dotnet
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: 10.x
-
-      - name: Get NuGet Artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: NuGet Packages
-          path: ${{ github.workspace }}/nupkgs
-
-      - name: Publish package to registry
-        run: |
-          dotnet nuget push "${{ github.workspace }}/nupkgs/*.nupkg" --api-key "${{ secrets.NUGET_APIKEY }}" --source "${{ env.NUGET_REGISTRY_URL }}"
+#  release-nuget:
+#    name: NuGet Release
+#    runs-on: ubuntu-latest
+#    needs: [build]
+#    steps:
+#      - name: Setup Dotnet
+#        uses: actions/setup-dotnet@v5
+#        with:
+#          dotnet-version: 10.x
+#
+#      - name: Get NuGet Artifact
+#        uses: actions/download-artifact@v8
+#        with:
+#          name: NuGet Packages
+#          path: ${{ github.workspace }}/nupkgs
+#
+#      - name: Publish package to registry
+#        run: |
+#          dotnet nuget push "${{ github.workspace }}/nupkgs/*.nupkg" --api-key "${{ secrets.NUGET_APIKEY }}" --source "${{ env.NUGET_REGISTRY_URL }}"
