@@ -25,7 +25,7 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Download Harmony
         run: curl -L https://www.nuget.org/api/v2/package/Lib.Harmony/${{ env.HARMONY_VERSION }} --output Lib.Harmony.nupkg
@@ -50,7 +50,7 @@ jobs:
           zip ${{ github.workspace }}/ResoniteModLoader.zip *
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: |
             ${{ github.workspace }}/release/*.dll
