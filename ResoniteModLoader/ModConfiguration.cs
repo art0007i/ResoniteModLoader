@@ -362,8 +362,8 @@ public class ModConfiguration : IModConfigurationDefinition {
 
 	private bool AnyValuesSet() {
 		return ConfigurationItemDefinitions
-		.Where(key => key.HasValue)
-		.Any();
+			.Where(key => key.HasValue)
+			.Any();
 	}
 
 	internal static ModConfiguration? LoadConfigForMod(ResoniteMod mod) {
@@ -556,19 +556,19 @@ public class ModConfiguration : IModConfigurationDefinition {
 		int count = 0;
 		Stopwatch stopwatch = Stopwatch.StartNew();
 		ModLoader.Mods()
-		.Select(mod => mod.GetConfiguration())
-		.Where(config => config != null)
-		.Where(config => config!.AutoSave)
-		.Where(config => config!.AnyValuesSet())
-		.Do(config => {
-			try {
-				// synchronously save the config
-				config!.SaveInternal();
-			} catch (Exception e) {
-				Logger.ErrorInternal($"Error saving configuration for {config!.Owner.Name}:\n{e}");
-			}
-			count += 1;
-		});
+			.Select(mod => mod.GetConfiguration())
+			.Where(config => config != null)
+			.Where(config => config!.AutoSave)
+			.Where(config => config!.AnyValuesSet())
+			.Do(config => {
+				try {
+					// synchronously save the config
+					config!.SaveInternal();
+				} catch (Exception e) {
+					Logger.ErrorInternal($"Error saving configuration for {config!.Owner.Name}:\n{e}");
+				}
+				count += 1;
+			});
 		stopwatch.Stop();
 		Logger.MsgInternal($"Configs saved for {count} mods in {stopwatch.ElapsedMilliseconds}ms.");
 	}

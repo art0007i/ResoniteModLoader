@@ -13,8 +13,8 @@ internal static class AssemblyLoader {
 			// Searching for "*.dll" would return results like "foo.dll_disabled"
 
 			assembliesToLoad = Directory.EnumerateFiles(assembliesDirectory, "*.dll")
-			.Where(file => file.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
-			.ToArray();
+				.Where(file => file.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
+				.ToArray();
 			Array.Sort(assembliesToLoad, string.CompareOrdinal);
 		} catch (DirectoryNotFoundException) {
 			Logger.MsgInternal($"{dirName} directory not found, creating it now.");
