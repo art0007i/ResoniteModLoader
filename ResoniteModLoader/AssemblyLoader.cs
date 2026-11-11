@@ -13,8 +13,8 @@ internal static class AssemblyLoader {
 			// Searching for "*.dll" would return results like "foo.dll_disabled"
 
 			assembliesToLoad = Directory.EnumerateFiles(assembliesDirectory, "*.dll")
-				.Where(file => file.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
-				.ToArray();
+			.Where(file => file.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
+			.ToArray();
 			Array.Sort(assembliesToLoad, string.CompareOrdinal);
 		} catch (DirectoryNotFoundException) {
 			Logger.MsgInternal($"{dirName} directory not found, creating it now.");
@@ -80,14 +80,12 @@ internal static class AssemblyLoader {
 				Logger.DebugInternal($"Resolving assembly reference for {args.RequestingAssembly?.FullName}");
 				return RMLAssembly;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			// I don't know why the above block would ever throw, but just in case it does...
 			string message = $"Exception while handling assembly resolution! [{args.RequestingAssembly?.FullName}] resolving [{args.Name}]: {e.Message}";
 			if (args.Name.StartsWith("ResoniteModLoader", StringComparison.Ordinal)) {
 				Logger.WarnInternal(message);
-			}
-			else {
+			} else {
 				Logger.DebugInternal(message);
 			}
 		}

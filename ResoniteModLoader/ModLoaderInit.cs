@@ -1,6 +1,7 @@
 using System.Diagnostics;
 
 namespace ResoniteModLoader;
+
 internal static class ModLoaderInit {
 
 	internal static void Initialize() {
